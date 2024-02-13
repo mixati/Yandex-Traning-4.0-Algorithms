@@ -4,47 +4,29 @@
 using namespace std;
 
 int ft_partition(vector<int> &a, int l, int r) {
-    int E = l, G = l, N = l;
-    int pivot = (long long)(a[l] + a[r]) / 2;
-    if (l >= r)
-        return 0;
-    while (N <= r) {
+    int tmp;
+    int pivot = a[l + rand() % (r-l)];
+    while (l <= r) {
         int y;
-        if ((a[N]) < pivot) {
-            y = a[N];
-            a[N] = a[G];
-            a[G] = a[E];
-            a[E] = y;
-            E++;
-            G++;
-        }
-        else if (a[N] == pivot) {
-            y = a[N];
-            a[N] = a[G];
-            a[G] = y;
-            G++;
-        }
-        N++;
+        while ((a[l]) < pivot)
+            ++l;
+        while (a[r] > pivot)
+        	--r;
+        if (l >= r)
+        	break;
+        tmp = a[l];
+    	a[l++] = a[r];
+    	a[r--] = tmp;
     }
-    return E;
+    return r;
 }
 
+
 void ft_quicksort(vector<int> &a, int l, int r) {
-    int p;
-    // cout << r - l << endl;
-    // for (int i = l; i <= r; i++)
-    //     cout << a[i] << ' ';
-    // cout << endl;
-    while (r > l) {
-        p = ft_partition(a, l, r);
-        if ((r - l)/2 > r-p) {
-            ft_quicksort(a, l, p-1);
-            l = p+1;
-        }
-        else {
-            ft_quicksort(a, p+1, r);
-            r = p-1;
-        }
+    if (r > l) {
+        int p = ft_partition(a, l, r);
+        ft_quicksort(a, l, p);
+        ft_quicksort(a, p+1, r);
     }
 }
 
@@ -61,4 +43,4 @@ int main() {
     }
     cout << endl;
 }
-// In process
+// DONE
